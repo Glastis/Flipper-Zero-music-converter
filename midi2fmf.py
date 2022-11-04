@@ -31,12 +31,12 @@ def convert_file(file_name: str, output_file_name: str, bpm: int):
         if msg_dict["type"] == "set_tempo":
             bpm = math.floor(60000000 / msg_dict["tempo"])
 
-        if msg_dict["type"] == "note_on" and msg_dict["time"] != 0:
-            pause = str(round(3 / msg_dict["time"]))
+        if msg_dict["type"] == "note_on":
+            pause = str(round(3 / msg_dict["time"] if msg_dict["time"] else 1))
             notes = notes + pause + "P, "
 
         if msg_dict["type"] == "note_off":
-            pause = str(round(3 / msg_dict["time"]))
+            pause = str(round(3 / msg_dict["time"] if msg_dict["time"] else 1))
             note = number_to_note(msg_dict["note"])
 
             notes = notes + pause + note[0] + str(note[1]) + ", "
